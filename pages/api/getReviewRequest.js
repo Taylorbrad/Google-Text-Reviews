@@ -14,16 +14,6 @@ export default async function getReviewRequest(req, res) {
     const docSnapshot = await getDoc(docRef)
     request = docSnapshot.data()
 
-
-    // Logic for querying is below:
-
-    // const q = query(collection(db, "user"), where("id", "==", username));
-    // const querySnapshot = await getDocs(q);
-    // querySnapshot.forEach((doc) => {
-    //     // doc.data() is never undefined for query doc snapshots
-    //     user = doc.data()
-    // });
-
     if (request === undefined)
     {
         res.status(404).json(
