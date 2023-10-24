@@ -1,24 +1,27 @@
 import {collection, doc, getCountFromServer, setDoc} from "firebase/firestore";
 import {db} from "@/firebase.config";
+import {wrapRequestHandlerWorker} from "next/dist/experimental/testmode/server";
 
-export default async function postObject(req, res) {
+export default async function postReviewRequest(req, res) {
 
     //TODO: check for post request type
 
-    const {reviewRequest} = req.headers;
-    const userJSON = JSON.parse(reviewRequest)
+    const {request} = req.headers;
+    const requestJSON = JSON.parse(request)
 
-    // const handle = userJSON.handle.toString()
-    // delete userJSON.handle;
+    console.log(requestJSON)
+
+    // const handle = requestJSON.handle.toString()
+    // delete requestJSON.handle;
 
     const dataCol = await doc(collection(db, "Review-Requests"))
 
-    await setDoc(dataCol, userJSON)
+    await setDoc(dataCol, requestJSON)
 
     res.status(200).json(
         {
             fireStoreID: dataCol.id,
-            // handle: userJSON.handle
+            // handle: requestJSON.handle
         }
     )
 }
