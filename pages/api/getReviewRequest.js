@@ -1,5 +1,6 @@
 import {collection, doc, getDoc, getDocs, query, where,} from "firebase/firestore";
-import {db} from "firebase.config"
+import {db, printFirebaseConfig} from "firebase.config"
+import firebase from "firebase/compat";
 
 export default async function getReviewRequest(req, res) {
 
@@ -9,6 +10,8 @@ export default async function getReviewRequest(req, res) {
     const requestID = h_requestID === undefined ? q_requestID : h_requestID
 
     let request;
+
+    console.log(printFirebaseConfig())
 
     const docRef = doc(db, "Review-Requests", requestID)
     const docSnapshot = await getDoc(docRef)
