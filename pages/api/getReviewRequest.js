@@ -10,7 +10,7 @@ export default async function getReviewRequest(req, res) {
 
     let request;
 
-    console.log(printFirebaseConfig())
+    printFirebaseConfig()
 
     const docRef = doc(db, "Review-Requests", requestID)
     const docSnapshot = await getDoc(docRef)
