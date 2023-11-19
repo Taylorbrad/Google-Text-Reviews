@@ -26,6 +26,9 @@ export default async function getReviewRequest(req, res) {
     }
     else
     {
+    //     res.headers.json({
+    //         "set-cookie": "asdf"
+    // })
         res.status(200).json(
             {
                 request: request
