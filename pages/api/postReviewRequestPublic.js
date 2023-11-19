@@ -12,12 +12,13 @@ export default async function postReviewRequest(req, res) {
 
     const requestJSON = JSON.parse(request)
 
+
     console.log(requestJSON)
 
     // const handle = requestJSON.handle.toString()
     // delete requestJSON.handle;
 
-    const dataCol = await doc(collection(db, "Review-Requests"))
+    const dataCol = await doc(collection(db, "Review-Requests-Public"))
 
     await setDoc(dataCol, requestJSON)
 
