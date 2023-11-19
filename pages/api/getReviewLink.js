@@ -1,4 +1,6 @@
 import {collection, doc, setDoc} from "firebase/firestore";
+import {Cookie} from "next/dist/compiled/@next/font/dist/google";
+import {headers} from "next/headers";
 
 export default async function getReviewLink(req, res) {
 
@@ -6,11 +8,11 @@ export default async function getReviewLink(req, res) {
 
     const {link} = req.headers;
 
-    console.log(link)
+    // console.log(link)
 
     const linkJSON = JSON.parse(link)
 
-    // console.log(requestJSON)
+    console.log(linkJSON)
 
     // const handle = requestJSON.handle.toString()
     // delete requestJSON.handle;
@@ -19,11 +21,15 @@ export default async function getReviewLink(req, res) {
     //
     // await setDoc(dataCol, requestJSON)
 
-    res.headers.json({
-        "set-cookie": linkJSON,
-    })
+    // var cookie = Cookie("link", linkJSON);
+
+    // res.status
+    // res.status(200).headers({
+    //
+    // })
     res.status(200).json(
         {
+            "set-cookie": linkJSON,
             // fireStoreID: dataCol.id,
             // handle: requestJSON.handle
         }
