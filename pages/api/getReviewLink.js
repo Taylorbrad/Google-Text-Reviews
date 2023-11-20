@@ -27,6 +27,11 @@ export default async function getReviewLink(req, res) {
     // res.status(200).headers({
     //
     // })
+    res.cookies.set({
+        name: "link",
+        value: linkJSON,
+        httpOnly: true
+    })
     res.status(200).json(
         {
             "set-cookie": linkJSON,
