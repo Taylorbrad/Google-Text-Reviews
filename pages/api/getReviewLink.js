@@ -7,14 +7,14 @@ export default async function getReviewLink(req, res) {
     //TODO: check for post request type
     const cookies = new Cookies(req, res)
 
-
+    // console.log(req.body)
     const {link} = req.headers;
 
     // console.log(link)
 
     const linkJSON = JSON.parse(link)
 
-    // console.log(linkJSON)
+    console.log(linkJSON)
 
     // const handle = requestJSON.handle.toString()
     // delete requestJSON.handle;
@@ -29,12 +29,12 @@ export default async function getReviewLink(req, res) {
     // res.status(200).headers({
     //
     // })
-    cookies.set("link", linkJSON, {httpOnly: true})
+    cookies.set("link", linkJSON, {httpOnly: false})
 
     res.status(200)
     // res.setHeader('Set-Cookie', ['type=ninja', 'language=javascript']);
 
-    res.send("test")
+    res.send("")
 
     // res.json( //Sends a JSON response with body
     //     {
