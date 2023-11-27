@@ -8,7 +8,7 @@ export default async function getReviewLink(req, res) {
     const cookies = new Cookies(req, res)
 
     // console.log(req.body)
-    const {link} = req.headers;
+    const {link} = req.query;
 
     // console.log(link)
 
@@ -29,12 +29,19 @@ export default async function getReviewLink(req, res) {
     // res.status(200).headers({
     //
     // })
-    cookies.set("link", linkJSON, {httpOnly: false})
 
-    res.status(200)
+    //Testing cookies
+    // cookies.set("link", linkJSON, {httpOnly: false})
+    // res.setHeader('Access-Control-Allow-Origin', 'http://localhost:63211');
+    // res.setHeader('Set-Cookie', [`link=${linkJSON};max-age=86400`]);
+    // res.setHeader('Access-Control-Allow-Credentials', 'true')
+
+    res.status(200).json(
+            // `link=${linkJSON}`
+            // fireStoreID: dataCol.id,
+            // handle: requestJSON.handle
+        )
     // res.setHeader('Set-Cookie', ['type=ninja', 'language=javascript']);
-
-    res.send("")
 
     // res.json( //Sends a JSON response with body
     //     {
