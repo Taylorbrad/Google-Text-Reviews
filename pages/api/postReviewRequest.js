@@ -6,11 +6,11 @@ export default async function postReviewRequest(req, res) {
 
     //TODO: check for post request type
 
-    const {request} = req.headers;
+    // const {request} = req.headers;
+    console.log(req.body)
+    // console.log(request)
 
-    console.log(request)
-
-    const requestJSON = JSON.parse(request)
+    const requestJSON = JSON.parse(req.body)
 
     console.log(requestJSON)
 
