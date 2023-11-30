@@ -8,19 +8,21 @@ export default async function postReviewRequestPublic(req, res) {
 
     // res.setHeader('Access-Control-Allow-Origin', 'http://localhost:63211');
     try {
-        const {request} = req.headers;
+        // const {request} = req.headers;
+        // console.log(request)
+        // const requestJSON = JSON.parse(request)
+        // console.log(requestJSON)
 
-        console.log(request)
 
-        const requestJSON = JSON.parse(request)
-
-
+        console.log(req.body)
+        const requestJSON = JSON.parse(req.body)
         console.log(requestJSON)
+        console.log(requestJSON["id"])
 
         // const handle = requestJSON.handle.toString()
         // delete requestJSON.handle;
 
-        const dataCol = await doc(collection(db, "Review-Requests-Public"))
+        const dataCol = await doc(collection(db, "Review-Requests-Public/" + requestJSON["id"] + "/Requests"))
 
         await setDoc(dataCol, requestJSON)
 

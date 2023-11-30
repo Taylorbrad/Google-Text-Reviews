@@ -8,10 +8,12 @@ export default async function postReviewRequest(req, res) {
 
     // const {request} = req.headers;
     console.log(req.body)
+    // console.log(req.headers)
+    // console.log(req)
     // console.log(request)
 
     const requestJSON = JSON.parse(req.body)
-
+    // //
     console.log(requestJSON)
 
     // const handle = requestJSON.handle.toString()
@@ -21,7 +23,7 @@ export default async function postReviewRequest(req, res) {
 
     await setDoc(dataCol, requestJSON)
 
-
+    // res.setHeader('Access-Control-Allow-Origin', '*');
 
     res.status(200).json(
         {
