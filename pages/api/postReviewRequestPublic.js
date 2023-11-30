@@ -7,20 +7,10 @@ export default async function postReviewRequestPublic(req, res) {
     //TODO: check for post request type
 
     // res.setHeader('Access-Control-Allow-Origin', 'http://localhost:63211');
+
     try {
-        // const {request} = req.headers;
-        // console.log(request)
-        // const requestJSON = JSON.parse(request)
-        // console.log(requestJSON)
-
-
-        console.log(req.body)
         const requestJSON = JSON.parse(req.body)
         console.log(requestJSON)
-        console.log(requestJSON["id"])
-
-        // const handle = requestJSON.handle.toString()
-        // delete requestJSON.handle;
 
         const dataCol = await doc(collection(db, "Review-Requests-Public/" + requestJSON["id"] + "/Requests"))
 
@@ -29,7 +19,6 @@ export default async function postReviewRequestPublic(req, res) {
         res.status(200).json(
             {
                 fireStoreID: dataCol.id,
-                // handle: requestJSON.handle
             }
         )
     } catch (e) {
