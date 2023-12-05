@@ -25,7 +25,7 @@ export default async function postReceiveText(req, res) {
 
   // const {linkId} = req.query;
 
-  console.log(req)
+  console.log(req.body)
 
   // res.setHeader('Set-Cookie', [`link=${linkIdJSON};max-age=86400`]);
 
