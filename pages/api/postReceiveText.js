@@ -34,6 +34,7 @@ export default async function postReceiveText(req, res) {
   // let request = docSnapshot.data()
 
   // console.log(request)
+  res.status(200).json("")
 
   // if (request === undefined)
   // {
