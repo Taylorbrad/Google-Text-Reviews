@@ -17,7 +17,7 @@
 
 import Cookies from 'cookies'
 import {collection, doc, getDoc, setDoc} from "firebase/firestore";
-import {db} from "../../firebase.config";
+import {db} from "../../config/firebase.config";
 
 export default async function postReceiveText(req, res) {
 

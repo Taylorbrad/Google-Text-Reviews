@@ -1,5 +1,5 @@
 import {collection, doc, getCountFromServer, setDoc} from "firebase/firestore";
-import {db} from "@/firebase.config";
+import {db} from "config/firebase.config";
 import {wrapRequestHandlerWorker} from "next/dist/experimental/testmode/server";
 
 export default async function postReviewRequestPublic(req, res) {

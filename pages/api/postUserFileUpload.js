@@ -1,5 +1,5 @@
 // import {collection, doc, setDoc} from "firebase/firestore";
-import {db} from "@/firebase.config";
+import {db} from "config/firebase.config";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import {collection, doc, setDoc} from "firebase/firestore";
 

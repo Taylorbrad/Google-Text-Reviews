@@ -1,4 +1,5 @@
-import {twilioClient} from "../../twilio.config";
+// import {twilioClient} from "big.config";
+import {twilioClient} from "config/twilio.config"
 
 export default async function postSendText(req, res) {
 
@@ -13,9 +14,10 @@ export default async function postSendText(req, res) {
 
         res.status(200).json("sent")
     } catch (e) {
+
         res.status(500).json("Internal Server Error")
     }
 
-    
+
 
 }

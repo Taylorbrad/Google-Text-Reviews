@@ -1,5 +1,5 @@
 import {collection, doc, setDoc} from "firebase/firestore";
-import {db} from "@/firebase.config";
+import {db} from "config/firebase.config";
 
 export default async function postReviewRequest(req, res) {
 

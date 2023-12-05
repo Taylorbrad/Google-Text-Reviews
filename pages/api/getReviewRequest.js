@@ -1,5 +1,5 @@
-import {collection, doc, getDoc, getDocs, query, where,} from "firebase/firestore";
-import {db, printFirebaseConfig} from "firebase.config"
+import {collection, doc, getDoc, query, where,} from "firebase/firestore";
+import {db, printFirebaseConfig} from "config/firebase.config"
 
 export default async function getReviewRequest(req, res) {
 

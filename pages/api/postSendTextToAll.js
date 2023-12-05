@@ -1,8 +1,8 @@
 import {collection, doc, getCountFromServer, getDocs, query, setDoc, where} from "firebase/firestore";
 // import firebase from "firebase/compat";
 // import firebase from "firebase.firestore";
-import {db} from "@/firebase.config";
-import {twilioClient} from "twilio.config"
+import {db} from "config/firebase.config";
+import {twilioClient} from "config/twilio.config"
 
 
 
