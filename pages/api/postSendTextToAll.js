@@ -25,13 +25,13 @@ export default async function postSendTextToAll(req, res) {
         querySnapshot.forEach((doc) => {
             // doc.data() is never undefined for query doc snapshots
 
-            twilioClient.messages
-                .create({
-                    body: 'Text Test',
-                    from: '+18669539161',
-                    to: '+18017062051'
-                })
-                .then(message => console.log(message.sid))
+            // twilioClient.messages
+            //     .create({
+            //         body: 'Text Test',
+            //         from: '+18669539161',
+            //         to: '+18017062051'
+            //     })
+            //     .then(message => console.log(message.sid))
 
             console.log(doc.id, " => ", doc.data());
         });
