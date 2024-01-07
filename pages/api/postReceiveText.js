@@ -26,9 +26,9 @@ export default async function postReceiveText(req, res) {
   // const {linkId} = req.query;
 
   // console.log(req.body.Body)
-  console.log(req.body)
+  console.log(req.body.From)
 
-  let phoneNumber = "+14355900217"
+  let phoneNumber = req.body.From
 
   // res.setHeader('Set-Cookie', [`link=${linkIdJSON};max-age=86400`]);
   // const docRef = doc(db, "Review-Requests-Public/" + linkId + "/Requests/init")
@@ -41,7 +41,7 @@ export default async function postReceiveText(req, res) {
     type: "incoming"
   }
 
-  const dataCol = await doc(collection(db, "Text-Conversation/" + phoneNumber + "/Conversations"))
+  const dataCol = await doc(collection(db, "Text-Conversation/" + phoneNumber + "/Conversation"))
 
   await setDoc(dataCol, textJSON)
 
