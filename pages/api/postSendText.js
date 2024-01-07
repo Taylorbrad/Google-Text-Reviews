@@ -25,7 +25,7 @@ export default async function postSendText(req, res) {
             type: "outgoing"
         }
 
-        const dataCol = await doc(collection(db, "Text-Conversation/intermediate/Conversations"), to)
+        const dataCol = await doc(collection(db, "Text-Conversation/"+ to + "/Conversations"))
         await setDoc(dataCol, textJSON)
 
         res.status(200).json("sent")
