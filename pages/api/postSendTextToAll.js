@@ -9,7 +9,6 @@ import {twilioClient} from "config/twilio.config"
 export default async function postSendTextToAll(req, res) {
 
     //TODO: check for post request type
-
     // res.setHeader('Access-Control-Allow-Origin', 'http://localhost:63211');
 
     try {
@@ -22,18 +21,54 @@ export default async function postSendTextToAll(req, res) {
         const q = query(collection(db, "TextTest"), where("phone", "!=", null));
 
         const querySnapshot = await getDocs(q);
-        querySnapshot.forEach((doc) => {
+
+        let i = 1;
+
+        async function test() {
             // doc.data() is never undefined for query doc snapshots
 
-            // twilioClient.messages
-            //     .create({
-            //         body: 'Text Test',
-            //         from: '+18669539161',
-            //         to: '+18017062051'
-            //     })
-            //     .then(message => console.log(message.sid))
+            try {
+                await twilioClient.messages
+                    .create({
+                        body: 'Text Test ' + i,
+                        from: '+18669539161',
+                        to: doc.data().phone,
+                    })
+                    .then(message => console.log(message.sid))
+            } catch (e) {
+                console.log(e)
+            }
 
-            console.log(doc.id, " => ", doc.data());
+
+            console.log("Send To: " + doc.data().phone + ' test #' + i)
+
+            // console.log(doc.id, " => ", doc.data());
+            ++i
+        }
+
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+        await querySnapshot.forEach((doc) => {
+            // doc.data() is never undefined for query doc snapshots
+            try {
+                    twilioClient.messages
+                    .create({
+                        body: 'Text Test ' + i,
+                        from: '+18669539161',
+                        to: doc.data().phone,
+                    })
+                    .then(message => console.log(message.sid))
+
+            } catch (e) {
+                console.log(e)
+            }
+
+            console.log("Send To: " + doc.data().phone + ' test #' + i)
+
+            // console.log(doc.id, " => ", doc.data());
+            ++i
         });
 
         res.status(200).json(

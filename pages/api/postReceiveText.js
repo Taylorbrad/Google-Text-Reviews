@@ -28,10 +28,18 @@ export default async function postReceiveText(req, res) {
   console.log(req.body.Body)
 
   // res.setHeader('Set-Cookie', [`link=${linkIdJSON};max-age=86400`]);
-
   // const docRef = doc(db, "Review-Requests-Public/" + linkId + "/Requests/init")
   // const docSnapshot = await getDoc(docRef)
   // let request = docSnapshot.data()
+
+  let textJSON = {
+    body: req.body.Body,
+    timestamp: Date.now(),
+  }
+
+  const dataCol = await doc(collection(db, "Receive-Text"))
+
+  await setDoc(dataCol, textJSON)
 
   // console.log(request)
   res.status(200).json("")
