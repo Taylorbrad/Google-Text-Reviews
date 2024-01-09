@@ -7,17 +7,20 @@ export default async function postSendText(req, res) {
 
     try {
 
-        let body = 'Single Text Test'
+        let body = req.body.Body
         let from = '+18669539161'
-        let to = '+14355900217'
+        let to = req.body.To
 
-        twilioClient.messages
+        let message = await twilioClient.messages
             .create({
                 body: body,
                 from: from,
                 to: to
             })
-            .then(message => console.log(message.sid))
+            // .then(message => {
+            //     console.log(mesage.status)
+            //     if (message.status !== "delivered") {throw Error("Message not sent")}
+            // }/*console.log(message.sid)*/)
 
         let textJSON = {
             body: body,
@@ -25,11 +28,12 @@ export default async function postSendText(req, res) {
             type: "outgoing"
         }
 
-        const dataCol = await doc(collection(db, "Text-Conversation/"+ to + "/Conversations"))
+        const dataCol = await doc(collection(db, "Text-Conversation/" + to + "/Conversation"))
         await setDoc(dataCol, textJSON)
 
         res.status(200).json("sent")
     } catch (e) {
+        console.log("Error")
         res.status(500).json("Internal Server Error")
     }
 

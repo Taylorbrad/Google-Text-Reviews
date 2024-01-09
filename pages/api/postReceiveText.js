@@ -30,6 +30,9 @@ export default async function postReceiveText(req, res) {
 
   let phoneNumber = req.body.From
 
+  phoneNumber = phoneNumber.substring(2,5) + '-' + phoneNumber.substring(5,8) + '-' + phoneNumber.substring(8,12)
+  // phoneNumber =
+
   // res.setHeader('Set-Cookie', [`link=${linkIdJSON};max-age=86400`]);
   // const docRef = doc(db, "Review-Requests-Public/" + linkId + "/Requests/init")
   // const docSnapshot = await getDoc(docRef)
