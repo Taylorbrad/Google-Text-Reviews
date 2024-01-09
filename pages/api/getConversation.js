@@ -1,4 +1,4 @@
-import {collection, doc, getDoc, getDocs, query, where,} from "firebase/firestore";
+import {collection, doc, getDoc, getDocs, query, where, orderBy} from "firebase/firestore";
 import {db, printFirebaseConfig} from "config/firebase.config"
 import {all} from "express/lib/application";
 
@@ -13,11 +13,8 @@ export default async function getReviewRequest(req, res) {
 
     let messageList = []
 
-    let phoneNumber = "+14355900217"
-
-    console.log(phoneNumber.substring(2,5) + '-' + phoneNumber.substring(5,8) + '-' + phoneNumber.substring(8,12))
-    // const query = query()
-    const querySnapshot = await getDocs(collection(db, "Text-Conversation", conversationID, "Conversation" ));
+    // const query = query(collection(db, "Text-Conversation", conversationID, "Conversation" ), orderBy("timestamp"))
+    const querySnapshot = await getDocs(collection(db, "Text-Conversation", conversationID, "Conversation" ), orderBy("timestamp"));
 
     querySnapshot.forEach((doc) => {
         // doc.data() is never undefined for query doc snapshots
@@ -27,7 +24,7 @@ export default async function getReviewRequest(req, res) {
     // const allData = querySnapshot.docs.map((doc) => doc.data());
     // DocumentReference guy = null;
 
-    console.log(messageList)
+    // console.log(messageList)
 
     // const docRef = doc(db, "Text-Conversation" + conversationID + "Conversation")
     // const colSnapshot = await getDoc(docRef)
