@@ -1,4 +1,4 @@
-import {collection, doc, getDoc, getDocs, query, where, orderBy} from "firebase/firestore";
+import {collection, doc, getDoc, getDocs, where, orderBy, query} from "firebase/firestore";
 import {db, printFirebaseConfig} from "config/firebase.config"
 import {all} from "express/lib/application";
 
@@ -13,8 +13,8 @@ export default async function getReviewRequest(req, res) {
 
     let messageList = []
 
-    // const query = query(collection(db, "Text-Conversation", conversationID, "Conversation" ), orderBy("timestamp"))
-    const querySnapshot = await getDocs(collection(db, "Text-Conversation", conversationID, "Conversation" ), orderBy("timestamp"));
+    const q = query(collection(db, "Text-Conversation", conversationID, "Conversation" ), orderBy("timestamp"))
+    const querySnapshot = await getDocs(q);
 
     querySnapshot.forEach((doc) => {
         // doc.data() is never undefined for query doc snapshots
