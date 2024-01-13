@@ -8,12 +8,14 @@ export default async function postSendText(req, res) {
 
     try {
 
-        // await NextCors(req, res, {
-        //     // Options
-        //     methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
-        //     origin: '*',
-        //     optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
-        // });
+        // For some reason, the preflight check OPTIONS request fails on this route only
+        // so this NextCors chunk ensures that it responds to OPTIONS requests with a success code.
+        await NextCors(req, res, {
+            // Options
+            methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
+            origin: '*',
+            optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+        });
 
         let body = req.body.Body
         let from = '+18669539161'
