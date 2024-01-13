@@ -1,8 +1,16 @@
 import {collection, doc, getDoc, getDocs, where, orderBy, query} from "firebase/firestore";
 import {db, printFirebaseConfig} from "config/firebase.config"
 import {all} from "express/lib/application";
+import NextCors from "nextjs-cors";
 
-export default async function getReviewRequest(req, res) {
+export default async function getConversation(req, res) {
+
+    // await NextCors(req, res, {
+    //     // Options
+    //     methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
+    //     origin: '*',
+    //     optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+    // });
 
     // const {q_requestID} = req.query
     // const {h_requestID} = req.headers
@@ -10,6 +18,7 @@ export default async function getReviewRequest(req, res) {
     // const requestID = h_requestID === undefined ? q_requestID : h_requestID
 
     const conversationID = req.body.id;
+
 
     let messageList = []
 

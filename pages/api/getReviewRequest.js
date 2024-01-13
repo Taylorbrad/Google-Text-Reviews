@@ -24,7 +24,7 @@ export default async function getReviewRequest(req, res) {
             }
         )
     }
-    
+
     else
     {
         res.status(200).json(

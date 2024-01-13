@@ -2,10 +2,18 @@
 import {twilioClient} from "config/twilio.config"
 import {collection, doc, setDoc} from "firebase/firestore";
 import {db} from "../../config/firebase.config";
+import NextCors from "nextjs-cors";
 
 export default async function postSendText(req, res) {
 
     try {
+
+        // await NextCors(req, res, {
+        //     // Options
+        //     methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
+        //     origin: '*',
+        //     optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+        // });
 
         let body = req.body.Body
         let from = '+18669539161'
@@ -33,8 +41,17 @@ export default async function postSendText(req, res) {
 
         res.status(200).json("sent")
     } catch (e) {
-        console.log("Error")
-        res.status(500).json("Internal Server Error")
+        if (req.body.Body == undefined || req.body.To == undefined)
+        {
+            console.log("Message body or Recipient is undefined")
+            res.status(400).json("Message body or Recipient is undefined")
+        }
+        else
+        {
+            console.log("Error")
+            res.status(500).json("Internal Server Error")
+        }
+
     }
 
 }
