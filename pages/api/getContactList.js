@@ -17,34 +17,37 @@ export default async function getConversation(req, res) {
 
     // const requestID = h_requestID === undefined ? q_requestID : h_requestID
 
-    const conversationID = req.body.id;
+    // const userID = req.body.id;
 
 
-    let messageList = []
+    let contactList = []
 
-    const q = query(collection(db, "Text-Conversation", conversationID, "Conversation" ), orderBy("timestamp"))
+    const q = query(collection(db, "Text-Conversation"), orderBy("whenAdded"))
     const querySnapshot = await getDocs(q);
 
     querySnapshot.forEach((doc) => {
-        // doc.data() is never undefined for query doc snapshots
-        // console.log(doc.id, " => ", doc.data());
-        messageList.push(doc.data())
+
+        let newData =  doc.data()
+        newData["id"] = doc.id
+
+        contactList.push(newData)
     });
+
     // const allData = querySnapshot.docs.map((doc) => doc.data());
     // DocumentReference guy = null;
 
-    // console.log(messageList)
+    // console.log(contactList)
 
-    // const docRef = doc(db, "Text-Conversation" + conversationID + "Conversation")
+    // const docRef = doc(db, "Text-Conversation" + userID + "Conversation")
     // const colSnapshot = await getDoc(docRef)
 
     // request = allData
 
-    if (messageList.length === 0)
+    if (contactList.length === 0)
     {
         res.status(404).json(
             {
-                errorMessage: "No messages found for " + conversationID
+                errorMessage: "No contacts found "// + userID
             }
         )
     }
@@ -52,7 +55,7 @@ export default async function getConversation(req, res) {
     {
         res.status(200).json(
             {
-                messages: messageList
+                contacts: contactList
             }
         )
     }

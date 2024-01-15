@@ -42,6 +42,7 @@ export default async function postSendText(req, res) {
         await setDoc(dataCol, textJSON)
 
         res.status(200).json("sent")
+
     } catch (e) {
         if (req.body.Body == undefined || req.body.To == undefined)
         {
@@ -50,8 +51,8 @@ export default async function postSendText(req, res) {
         }
         else
         {
-            console.log("Error")
-            res.status(500).json("Internal Server Error")
+            console.log(e)
+            res.status(500).json(e)
         }
 
     }
