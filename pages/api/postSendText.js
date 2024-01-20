@@ -1,6 +1,6 @@
 // import {twilioClient} from "big.config";
 import {twilioClient} from "config/twilio.config"
-import {collection, doc, setDoc} from "firebase/firestore";
+import {collection, doc, getDoc, setDoc} from "firebase/firestore";
 import {db} from "../../config/firebase.config";
 import NextCors from "nextjs-cors";
 
@@ -27,6 +27,8 @@ export default async function postSendText(req, res) {
                 from: from,
                 to: to
             })
+
+
             // .then(message => {
             //     console.log(mesage.status)
             //     if (message.status !== "delivered") {throw Error("Message not sent")}
@@ -37,9 +39,21 @@ export default async function postSendText(req, res) {
             timestamp: Date.now(),
             type: "outgoing"
         }
+        const numberDoc =  await doc(db, "Text-Conversation", to)
+        const docSnapshot = await getDoc(numberDoc)
+        let request = docSnapshot.data()
+
+        if (request === undefined) {
+            let request2 = await fetch(`http://localhost:3000/api/postAddContact?to=${to}`)
+            console.log(request2.status)
+        }
+
+
 
         const dataCol = await doc(collection(db, "Text-Conversation/" + to + "/Conversation"))
         await setDoc(dataCol, textJSON)
+
+        // console.log(message.status)
 
         res.status(200).json("sent")
 

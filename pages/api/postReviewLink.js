@@ -1,10 +1,17 @@
 import Cookies from 'cookies'
 import {collection, doc, getDoc, setDoc} from "firebase/firestore";
 import {db} from "../../config/firebase.config";
+import NextCors from "nextjs-cors";
 
 export default async function postReviewLink(req, res) {
 
     //TODO: check for post request type
+    await NextCors(req, res, {
+        // Options
+        methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
+        origin: '*',
+        optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+    });
 
     const {linkId} = req.query;
 

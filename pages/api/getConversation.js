@@ -1,4 +1,4 @@
-import {collection, doc, getDoc, getDocs, where, orderBy, query} from "firebase/firestore";
+import {collection, doc, getDoc, getDocs, where, orderBy, query, limit} from "firebase/firestore";
 import {db, printFirebaseConfig} from "config/firebase.config"
 import {all} from "express/lib/application";
 import NextCors from "nextjs-cors";
@@ -19,10 +19,12 @@ export default async function getConversation(req, res) {
 
     const conversationID = req.body.id;
 
+    console.log("getConversation")
+
 
     let messageList = []
 
-    const q = query(collection(db, "Text-Conversation", conversationID, "Conversation" ), orderBy("timestamp"))
+    const q = query(collection(db, "Text-Conversation", conversationID, "Conversation" ), orderBy("timestamp"), /*limit(6)*/)
     const querySnapshot = await getDocs(q);
 
     querySnapshot.forEach((doc) => {
@@ -40,20 +42,26 @@ export default async function getConversation(req, res) {
 
     // request = allData
 
-    if (messageList.length === 0)
-    {
-        res.status(404).json(
-            {
-                errorMessage: "No messages found for " + conversationID
-            }
-        )
-    }
-    else
-    {
-        res.status(200).json(
-            {
-                messages: messageList
-            }
-        )
-    }
+    res.status(200).json(
+        {
+            messages: messageList
+        }
+    )
+
+    // if (messageList.length === 0)
+    // {
+    //     res.status(404).json(
+    //         {
+    //             errorMessage: "No messages found for " + conversationID
+    //         }
+    //     )
+    // }
+    // else
+    // {
+    //     res.status(200).json(
+    //         {
+    //             messages: messageList
+    //         }
+    //     )
+    // }
 }
