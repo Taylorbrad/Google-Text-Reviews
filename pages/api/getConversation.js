@@ -12,6 +12,7 @@ export default async function getConversation(req, res) {
         optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
     });
 
+
     // const {q_requestID} = req.query
     // const {h_requestID} = req.headers
 
