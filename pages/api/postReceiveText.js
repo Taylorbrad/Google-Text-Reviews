@@ -16,7 +16,7 @@
 // });
 
 import Cookies from 'cookies'
-import {collection, doc, getDoc, setDoc} from "firebase/firestore";
+import {collection, doc, getDoc, getDocs, limit, orderBy, query, setDoc, where} from "firebase/firestore";
 import {db} from "../../config/firebase.config";
 
 export default async function postReceiveText(req, res) {
@@ -29,7 +29,8 @@ export default async function postReceiveText(req, res) {
   console.log(req.body.From)
 
   let phoneNumber = req.body.From
-  let username = req.body.username
+  let username
+  // let username = req.body.username
 
   phoneNumber = phoneNumber.substring(2,5) + '-' + phoneNumber.substring(5,8) + '-' + phoneNumber.substring(8,12)
   // phoneNumber =
@@ -44,6 +45,14 @@ export default async function postReceiveText(req, res) {
     timestamp: Date.now(),
     type: "incoming"
   }
+
+  const q = query(collection(db, `Texting-User`), where("number", "==", phoneNumber), limit(1))
+  // const q = query(collection(db, `Texting-User/${username}/Contacts`, conversationID, "Conversation" ), orderBy("timestamp"), /*limit(6)*/)
+  const querySnapshot = await getDocs(q);
+  querySnapshot.forEach((doc) => {
+
+    username = doc.id
+  });
 
   const dataCol = await doc(collection(db, `Texting-User/${username}/Contacts/` + phoneNumber + "/Conversation"))
 
