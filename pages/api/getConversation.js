@@ -13,19 +13,19 @@ export default async function getConversation(req, res) {
     });
 
 
-    // const {q_requestID} = req.query
+    const {username} = req.query
     // const {h_requestID} = req.headers
 
     // const requestID = h_requestID === undefined ? q_requestID : h_requestID
 
     const conversationID = req.body.id;
 
-    console.log("getConversation")
+    // console.log("getConversation")
 
 
     let messageList = []
 
-    const q = query(collection(db, "Text-Conversation", conversationID, "Conversation" ), orderBy("timestamp"), /*limit(6)*/)
+    const q = query(collection(db, `Texting-User/${username}/Contacts`, conversationID, "Conversation" ), orderBy("timestamp"), /*limit(6)*/)
     const querySnapshot = await getDocs(q);
 
     querySnapshot.forEach((doc) => {

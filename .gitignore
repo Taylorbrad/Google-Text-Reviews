@@ -34,3 +34,4 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 pages/api/postSendTextToAll.js
+pages/api/getBuyNumber.js

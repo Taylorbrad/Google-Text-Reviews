@@ -15,18 +15,18 @@ export default async function postAddContact(req, res) {
         });
 
         // let to = req.body.To
-        const {to} = req.query;
+        const {to, username} = req.query;
 
 
 
-        const numberDoc =  await doc(db, "Text-Conversation", to)
+        const numberDoc =  await doc(db, `Texting-User/${username}/Contacts`, to)
         const docSnapshot = await getDoc(numberDoc)
         let request = docSnapshot.data()
 
         if (request === undefined) {
             await setDoc(numberDoc, {whenAdded: Date.now(), contactName: ""})
 
-            const conversationInitDoc = await doc(collection(db, "Text-Conversation/" + to + "/Conversation"))
+            const conversationInitDoc = await doc(collection(db, `Texting-User/${username}/Contacts/` + to + "/Conversation"))
             await setDoc(conversationInitDoc, {})
         }
         else {
@@ -35,6 +35,7 @@ export default async function postAddContact(req, res) {
         res.status(200).json("Contact Added: " + to)
     }
     catch (e) {
+        console.log(e)
         res.status(500).json(e)
     }
 }

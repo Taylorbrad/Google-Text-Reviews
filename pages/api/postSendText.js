@@ -7,6 +7,10 @@ import NextCors from "nextjs-cors";
 export default async function postSendText(req, res) {
 
     try {
+        let from
+        let to = req.body.To
+        let body = req.body.Body
+        let username = req.body.username
 
         // For some reason, the preflight check OPTIONS request fails on this route only
         // so this NextCors chunk ensures that it responds to OPTIONS requests with a success code.
@@ -17,9 +21,30 @@ export default async function postSendText(req, res) {
             optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
         });
 
-        let body = req.body.Body
-        let from = '+18669539161'
-        let to = req.body.To
+        const userDoc =  await doc(db, `Texting-User/${username}`)
+        const docSnap = await getDoc(userDoc)
+        let request = docSnap.data()
+
+        if (request !== undefined)
+        {
+            if (request.number === '') {
+                res.status(202).json('No phone number found for this user')
+                return
+            }
+            else
+            {
+                from = request.number
+            }
+        }
+        else
+        {
+            res.status(202).json('User not found')
+            return
+        }
+
+        // console.log('after response: ' + from)
+
+
 
         let message = await twilioClient.messages
             .create({
@@ -27,8 +52,6 @@ export default async function postSendText(req, res) {
                 from: from,
                 to: to
             })
-
-
             // .then(message => {
             //     console.log(mesage.status)
             //     if (message.status !== "delivered") {throw Error("Message not sent")}
@@ -39,21 +62,21 @@ export default async function postSendText(req, res) {
             timestamp: Date.now(),
             type: "outgoing"
         }
-        const numberDoc =  await doc(db, "Text-Conversation", to)
-        const docSnapshot = await getDoc(numberDoc)
-        let request = docSnapshot.data()
 
-        if (request === undefined) {
-            let request2 = await fetch(`http://localhost:3000/api/postAddContact?to=${to}`)
+        const numberDoc =  await doc(db, `Texting-User/${username}/Contacts/`, to)
+        const docSnapshot = await getDoc(numberDoc)
+        let request2 = docSnapshot.data()
+
+        if (request2 === undefined) {
+            let request2 = await fetch(`http://localhost:3000/api/postAddContact?to=${to}&username=${username}`)
             console.log(request2.status)
         }
 
 
 
-        const dataCol = await doc(collection(db, "Text-Conversation/" + to + "/Conversation"))
+        const dataCol = await doc(collection(db, `Texting-User/${username}/Contacts/` + to + "/Conversation"))
         await setDoc(dataCol, textJSON)
 
-        // console.log(message.status)
 
         res.status(200).json("sent")
 
