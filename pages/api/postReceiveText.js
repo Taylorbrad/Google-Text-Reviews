@@ -58,7 +58,7 @@ export default async function postReceiveText(req, res) {
     username = doc.id
   });
 
-  const dataCol = await doc(collection(db, `Texting-User/${username}/Contacts/` + to + "/Conversation"))
+  const dataCol = await doc(collection(db, `Texting-User/${username}/Contacts/` + phoneNumber + "/Conversation"))
 
   await setDoc(dataCol, textJSON)
 
