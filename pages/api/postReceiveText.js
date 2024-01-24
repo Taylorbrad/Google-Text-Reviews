@@ -34,6 +34,7 @@ export default async function postReceiveText(req, res) {
   // let username = req.body.username
 
   phoneNumber = phoneNumber.substring(2,5) + '-' + phoneNumber.substring(5,8) + '-' + phoneNumber.substring(8,12)
+  to = to.substring(2,5) + '-' + to.substring(5,8) + '-' + to.substring(8,12)
   // phoneNumber =
 
   // res.setHeader('Set-Cookie', [`link=${linkIdJSON};max-age=86400`]);
@@ -48,7 +49,7 @@ export default async function postReceiveText(req, res) {
   }
 
   let i = 0
-  const q = query(collection(db, `Texting-User`), where("number", "==", phoneNumber), limit(1))
+  const q = query(collection(db, `Texting-User`), where("number", "==", to), limit(1))
   // const q = query(collection(db, `Texting-User/${username}/Contacts`, conversationID, "Conversation" ), orderBy("timestamp"), /*limit(6)*/)
   const querySnapshot = await getDocs(q);
   querySnapshot.forEach((doc) => {
@@ -57,12 +58,12 @@ export default async function postReceiveText(req, res) {
     username = doc.id
   });
 
-  const dataCol = await doc(collection(db, `Texting-User/${username}/Contacts/` + phoneNumber + "/Conversation"))
+  const dataCol = await doc(collection(db, `Texting-User/${username}/Contacts/` + to + "/Conversation"))
 
   await setDoc(dataCol, textJSON)
 
   // console.log(request)
-  console.log(`Message from ${req.body.From} received by ${username}. sent to ${to}`)
+  console.log(`Message from ${phoneNumber} received by ${username}. sent to ${to}`)
   res.status(200).json("")
 
   // if (request === undefined)
