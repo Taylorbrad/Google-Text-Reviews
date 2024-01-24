@@ -46,11 +46,13 @@ export default async function postReceiveText(req, res) {
     type: "incoming"
   }
 
+  let i = 0
   const q = query(collection(db, `Texting-User`), where("number", "==", phoneNumber), limit(1))
   // const q = query(collection(db, `Texting-User/${username}/Contacts`, conversationID, "Conversation" ), orderBy("timestamp"), /*limit(6)*/)
   const querySnapshot = await getDocs(q);
   querySnapshot.forEach((doc) => {
-
+    // console.log(i)
+    ++i
     username = doc.id
   });
 
@@ -59,7 +61,7 @@ export default async function postReceiveText(req, res) {
   await setDoc(dataCol, textJSON)
 
   // console.log(request)
-  console.log(`Message from ${req.body.From} received by ${username}`)
+  console.log(`Message from ${req.body.From} received by ${username}. ${i} docs found`)
   res.status(200).json("")
 
   // if (request === undefined)
