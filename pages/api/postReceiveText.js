@@ -26,7 +26,7 @@ export default async function postReceiveText(req, res) {
   // const {linkId} = req.query;
 
   // console.log(req.body.Body)
-  console.log(req.body.From)
+
 
   let phoneNumber = req.body.From
   let username
@@ -59,6 +59,7 @@ export default async function postReceiveText(req, res) {
   await setDoc(dataCol, textJSON)
 
   // console.log(request)
+  console.log(`Message from ${req.body.From} received by ${username}`)
   res.status(200).json("")
 
   // if (request === undefined)
