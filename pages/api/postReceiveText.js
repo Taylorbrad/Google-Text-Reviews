@@ -29,6 +29,7 @@ export default async function postReceiveText(req, res) {
   console.log(req.body.From)
 
   let phoneNumber = req.body.From
+  let username = req.body.username
 
   phoneNumber = phoneNumber.substring(2,5) + '-' + phoneNumber.substring(5,8) + '-' + phoneNumber.substring(8,12)
   // phoneNumber =
@@ -44,7 +45,7 @@ export default async function postReceiveText(req, res) {
     type: "incoming"
   }
 
-  const dataCol = await doc(collection(db, "Text-Conversation/" + phoneNumber + "/Conversation"))
+  const dataCol = await doc(collection(db, `Texting-User/${username}/Contacts/` + phoneNumber + "/Conversation"))
 
   await setDoc(dataCol, textJSON)
 

@@ -12,17 +12,16 @@ export default async function getConversation(req, res) {
         optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
     });
 
-    // const {q_requestID} = req.query
+    const {username} = req.query
     // const {h_requestID} = req.headers
 
     // const requestID = h_requestID === undefined ? q_requestID : h_requestID
 
     // const userID = req.body.id;
 
-
     let contactList = []
 
-    const q = query(collection(db, "Text-Conversation"), orderBy("whenAdded"))
+    const q = query(collection(db, `Texting-User/${username}/Contacts`), orderBy("whenAdded"))
     const querySnapshot = await getDocs(q);
 
     querySnapshot.forEach((doc) => {
